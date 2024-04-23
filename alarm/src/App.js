@@ -10,41 +10,44 @@ function App() {
   const startTimer = () => {
     const id = setInterval(() => {
       setSecVal(sec => {
-        if (sec === 59) {
+        const newSec = parseInt(sec) + 1;
+        if (newSec === 60) {
+          setSecVal('00'); 
           setMinVal(min => {
-            if (min === 59) {
+            const newMin = parseInt(min) + 1;
+            if (newMin === 60) {
+              setMinVal('00'); 
               setHourVal(hour => (hour === '23' ? '00' : ('0' + (parseInt(hour) + 1)).slice(-2)));
-              return '00';
             } else {
-              return ('0' + (parseInt(min) + 1)).slice(-2);
+              return ('0' + newMin).slice(-2);
             }
           });
-          return '00';
         } else {
-          return ('0' + (parseInt(sec) + 1)).slice(-2);
+          return ('0' + newSec).slice(-2);
         }
       });
     }, 1000);
-
-    setIntervalId(id); // Store the interval ID in state
+  
+    setIntervalId(id); 
   };
+  
 
   const handleStartClick = () => {
-    if (!intervalId) { // Check if the interval is not already running
+    if (!intervalId) {
       startTimer();
     }
   };
 
   const stopTimer = () => {
-    clearInterval(intervalId); // Clear the interval using the stored interval ID
-    setIntervalId(null); // Reset the interval ID in state
+    clearInterval(intervalId); 
+    setIntervalId(null); 
   };
 
   const resetTimer = () => {
-    stopTimer(); // Stop the timer if it's running
-    setHourVal('00'); // Reset hours to '00'
-    setMinVal('00'); // Reset minutes to '00'
-    setSecVal('00'); // Reset seconds to '00'
+    stopTimer();
+    setHourVal('00'); 
+    setMinVal('00'); 
+    setSecVal('00'); 
   };
 
   return (
